@@ -4,46 +4,35 @@ import config from "config";
 import { ogg } from "./ogg.js";
 import { openai } from "./openai.js";
 import { code } from "telegraf/format";
-
-console.log(config.get("TEST_ENV"))
-
-const INITIAL_SESSION = {
-  messages: [],
-}
+import { removeFile } from "./utils.js";
+import { processTextToChat, initCommand} from "./logic.js"
 
 const bot = new Telegraf(config.get("TELEGRAM_TOKEN"));
 
 bot.use(session())
 
-bot.command("new", async (ctx) => {
-  ctx.session = INITIAL_SESSION
-  await ctx.reply("Чекаю на голосове або текстове повідомлення...")
-})
+bot.command("new", initCommand)
 
-bot.command("start", async (ctx) => {
-  ctx.session = INITIAL_SESSION
-  await ctx.reply("Чекаю на голосове або текстове повідомлення...")
-})
+bot.command("start", initCommand)
 
 bot.on(message("voice"), async (ctx) => {
   ctx.session ??= INITIAL_SESSION
   try {
-    await ctx.reply(code("Зачекайте сєку пліз, я в процесі:)"))
+    await ctx.reply(code("Зачекайте трошки, я in progress ..."))
     const link = await ctx.telegram.getFileLink(ctx.message.voice.file_id)
     const userId = String(ctx.message.from.id)
     const oggPath = await ogg.create(link.href, userId)
     const mp3Path = await ogg.toMp3(oggPath, userId)
 
+    removeFile(oggPath)
+
     const text = await openai.transcription(mp3Path)
+
+    removeFile(mp3Path)
+
     await ctx.reply(code(`Ви запитуєте: ${text}`))
 
-    ctx.session.messages.push({ role: openai.roles.USER, content: text })
-
-    const response = await openai.chat(ctx.session.messages)
-
-    ctx.session.messages.push({ role: openai.roles.ASSISTANT, content: response.content })
-
-    await ctx.reply(response.content)
+    await processTextToChat(ctx, text)
   } catch (e) {
     console.log("Error while voice message", e.message)
   }
@@ -52,7 +41,7 @@ bot.on(message("voice"), async (ctx) => {
 bot.on(message("text"), async (ctx) => {
   ctx.session ??= INITIAL_SESSION
   try {
-    await ctx.reply(code("Зачекайте сєку пліз, я в процесі:)"))
+    await ctx.reply(code("Зачекайте трошки, я in progress ..."))
 
     ctx.session.messages.push({ role: openai.roles.USER, content: ctx.message.text })
 
@@ -62,7 +51,7 @@ bot.on(message("text"), async (ctx) => {
 
     await ctx.reply(response.content)
   } catch (e) {
-    console.log("Error while voice message", e.message)
+    console.log("Error while text message", e.message)
   }
 })
 
