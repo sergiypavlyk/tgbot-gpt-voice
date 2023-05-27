@@ -5,7 +5,7 @@ import { ogg } from "./ogg.js";
 import { openai } from "./openai.js";
 import { code } from "telegraf/format";
 import { removeFile } from "./utils.js";
-import { processTextToChat, initCommand} from "./logic.js"
+import { processTextToChat, initCommand, INITIAL_SESSION } from "./logic.js";
 
 const bot = new Telegraf(config.get("TELEGRAM_TOKEN"));
 

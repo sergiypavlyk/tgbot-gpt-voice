@@ -1,7 +1,7 @@
 import { openai } from "./openai.js";
 import { textConverter } from "./text.js";
 
-const INITIAL_SESSION = {
+export const INITIAL_SESSION = {
   messages: [],
 }
 
