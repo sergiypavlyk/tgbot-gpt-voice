@@ -7,7 +7,7 @@ import { code } from "telegraf/format";
 import { removeFile } from "./utils.js";
 import { processTextToChat, initCommand, INITIAL_SESSION } from "./logic.js";
 
-console.log(process.env)
+console.log("ENV = ", process.env)
 const bot = new Telegraf(JSON.parse(process.env.MY_PRIVATE_KEYS).TELEGRAM_TOKEN);
 
 bot.use(session())
