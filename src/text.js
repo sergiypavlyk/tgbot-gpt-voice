@@ -1,16 +1,22 @@
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
-import { readFileSync } from "fs";
+// import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
 import axios from "axios";
+import * as dotenv from "dotenv";
+import { EnvVariables } from "./getEnvs.js"
+
+
+dotenv.config();
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 class TextConverter {
   async getToken() {
-    const key = JSON.parse(
-      readFileSync(resolve(__dirname, "../google-youtube.json"), "utf-8")
-    )
+    // const key = JSON.parse(
+    //   readFileSync(resolve(__dirname, "../google-youtube.json"), "utf-8")
+    // )
+    const key =  EnvVariables.getAll();
 
     const token = jwt.sign(
       {
