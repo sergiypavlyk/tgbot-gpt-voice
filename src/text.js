@@ -18,6 +18,7 @@ class TextConverter {
       { algorithm: "RS256" }
     )
 
+    console.log('21')
     const response = await axios.post(
       "https://www.googleapis.com/oauth2/v4/token",
       {
@@ -26,6 +27,7 @@ class TextConverter {
       }
     )
 
+    console.log('30', response)
     return response.data.access_token
   }
 
