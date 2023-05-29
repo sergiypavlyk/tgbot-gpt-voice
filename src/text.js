@@ -8,7 +8,7 @@ class TextConverter {
   async getToken() {
     const token = jwt.sign(
       {
-        iss: process.env.CLIENT_EMAIL,
+        iss:"tgbot-185@smart-shoreline-321315.iam.gserviceaccount.com",
         scope: "https://www.googleapis.com/auth/cloud-platform",
         aud: "https://www.googleapis.com/oauth2/v4/token",
         exp: Math.floor(Date.now() / 1000) + 60 * 60,
