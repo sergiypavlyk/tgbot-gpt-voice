@@ -44,6 +44,8 @@ class TextConverter {
         audioConfig: { audioEncoding: "MP3" }
       }
 
+      console.log('text 2 speech method')
+
       const accessToken = await this.getToken()
 
       const response = await axios({
