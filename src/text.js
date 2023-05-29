@@ -4,14 +4,11 @@ import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
 import axios from "axios";
 
-
-console.log(process.env.PRIVATE_KEY)
-
 class TextConverter {
   async getToken() {
     const token = jwt.sign(
       {
-        iss:"tgbot-185@smart-shoreline-321315.iam.gserviceaccount.com",
+        iss: process.env.CLIENT_EMAIL,
         scope: "https://www.googleapis.com/auth/cloud-platform",
         aud: "https://www.googleapis.com/oauth2/v4/token",
         exp: Math.floor(Date.now() / 1000) + 60 * 60,
@@ -21,7 +18,6 @@ class TextConverter {
       { algorithm: "RS256" }
     )
 
-    console.log('21')
     const response = await axios.post(
       "https://www.googleapis.com/oauth2/v4/token",
       {
@@ -30,7 +26,6 @@ class TextConverter {
       }
     )
 
-    console.log('30', response)
     return response.data.access_token
   }
 
@@ -46,8 +41,6 @@ class TextConverter {
         },
         audioConfig: { audioEncoding: "MP3" }
       }
-
-      console.log('text 2 speech method')
 
       const accessToken = await this.getToken()
 
