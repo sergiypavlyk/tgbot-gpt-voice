@@ -9,7 +9,7 @@ import { removeFile } from "./utils.js";
 import { processTextToChat, initCommand, INITIAL_SESSION } from "./logic.js";
 
 dotenv.config();
-const bot = new Telegraf(JSON.parse(process.env.TELEGRAM_TOKEN).KEY);
+const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
 
 bot.use(session())
 
