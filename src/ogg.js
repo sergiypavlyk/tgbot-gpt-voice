@@ -21,7 +21,7 @@ class OggConverter {
           .inputOption("-t 30")
           .output(outputPath)
           .on("end", () => {
-            removeFile(input)
+            // removeFile(input)
             resolve(outputPath)
           })
           .on("error", (err) => reject(err.message))
