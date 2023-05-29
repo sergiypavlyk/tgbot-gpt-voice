@@ -1,5 +1,5 @@
 export class EnvVariables {
-  static getAll() {
+  static get getAll() {
     return process.env;
   }
 }

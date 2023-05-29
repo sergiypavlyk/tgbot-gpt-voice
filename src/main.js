@@ -7,12 +7,11 @@ import { openai } from "./openai.js";
 import { code } from "telegraf/format";
 import { removeFile } from "./utils.js";
 import { processTextToChat, initCommand, INITIAL_SESSION } from "./logic.js";
-import { EnvVariables } from "./getEnvs.js"
 
 dotenv.config();
-const key = EnvVariables.getAll();
-console.log("ENV TELEGRAM_TOKEN:", key.TELEGRAM_TOKEN);
-const bot = new Telegraf(key.TELEGRAM_TOKEN);
+const tgToken = process.env.telegram_token;
+console.log("tgToken:", tgToken)
+const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
 
 bot.use(session())
 

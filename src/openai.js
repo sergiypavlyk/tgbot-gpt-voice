@@ -1,10 +1,6 @@
 import { Configuration, OpenAIApi } from "openai";
-// import config from "config";
 import { createReadStream } from "fs";
 import * as dotenv from "dotenv";
-import { EnvVariables } from "./getEnvs.js"
-
-const key =  EnvVariables.getAll();
 
 dotenv.config();
 class OpenAI {
@@ -45,4 +41,4 @@ class OpenAI {
   }
 }
 
-export const openai = new OpenAI(key.OPENAI_KEY);
+export const openai = new OpenAI(process.env.OPENAI_KEY);
