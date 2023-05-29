@@ -35,6 +35,8 @@ class OggConverter {
   async create(url, filename) {
     try {
       const oggPath = resolve(__dirname, "../voices", `${filename}.ogg`)
+      console.log("create  oggPath:", oggPath)
+
       const response = await axios({
         method: "get",
         url,

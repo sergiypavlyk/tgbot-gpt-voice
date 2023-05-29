@@ -4,7 +4,6 @@ import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
 import axios from "axios";
 
-console.log(process.env.PRIVATE_KEY)
 class TextConverter {
   async getToken() {
     const token = jwt.sign(
