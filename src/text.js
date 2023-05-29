@@ -1,6 +1,3 @@
-import { dirname, resolve } from "path";
-import { fileURLToPath } from "url";
-import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
 import axios from "axios";
 
